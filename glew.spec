@@ -1,6 +1,6 @@
 %define	name	glew
 %define	version	1.3.4
-%define	release	%mkrel 3
+%define	release	%mkrel 4
 %define	major	1.3
 %define	libname	%mklibname %{name} %{major}
 
