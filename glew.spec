@@ -1,8 +1,9 @@
-%define	name	glew
-%define	version	1.3.4
-%define	release	%mkrel 4
-%define	major	1.3
-%define	libname	%mklibname %{name} %{major}
+%define	name glew
+%define	version 1.4.0
+%define	release %mkrel 1
+%define	major 1.3
+%define	libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
 %define _requires_exceptions devel(/lib/libNoVersion)
 
@@ -12,8 +13,8 @@ Version:	%{version}
 Release:	%{release}
 Group:		Development/C
 License:	BSD
-URL:		http://www.sourceforge.net/projects/glew/
-Source0:	%{name}-%{version}-src.tar.bz2
+URL:		http://glew.sourceforge.net
+Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}-src.zip
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	X11-devel MesaGLU-devel
 
@@ -26,11 +27,11 @@ driver or not. OpenGL core and extension functionality is exposed via a
 single header file. GLEW currently supports a variety of platforms and
 operating systems, including Windows, Linux, Darwin, Irix, and Solaris. 
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	GLEW library
 Group:		System/Libraries
 
-%description -n	%{libname}
+%description -n %{libname}
 The goal of the OpenGL Extension Wrangler Library (GLEW) is to assist C/C++
 OpenGL developers with two tedious tasks: initializing and using extensions
 and writing portable applications. GLEW provides an efficient run-time
@@ -39,16 +40,15 @@ driver or not. OpenGL core and extension functionality is exposed via a
 single header file. GLEW currently supports a variety of platforms and
 operating systems, including Windows, Linux, Darwin, Irix, and Solaris.
 
-
-%package -n	%{libname}-devel
+%package -n %{develname}
 Summary:	Development files for using the %{name} library
 Group:		Development/C
-Requires:	%{libname} = %{version}
+Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 
-%description -n	%{libname}-devel
-Development files for using the %{name} library
+%description -n	%{develname}
+Development files for using the %{name} library.
 
 %prep
 %setup -q -n %{name}
@@ -77,7 +77,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n %{libname}
 %{_libdir}/libGLEW.so.%{major}*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW.a
 %{_libdir}/libGLEW.so
