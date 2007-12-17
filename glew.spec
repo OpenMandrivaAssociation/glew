@@ -15,7 +15,6 @@ Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}-src.tgz
 Patch0:		%{name}-1.4.0-makefile.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 The goal of the OpenGL Extension Wrangler Library (GLEW) is to assist C/C++
