@@ -1,4 +1,4 @@
-%define	major 1.4
+%define	major 1.5
 %define	libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
@@ -6,13 +6,12 @@
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.4.0
+Version:	1.5.0
 Release:	%mkrel 1
 Group:		Development/C
 License:	BSD
 URL:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}-src.tgz
-Patch0:		%{name}-1.4.0-makefile.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
@@ -53,7 +52,6 @@ Development files for using the %{name} library.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1
 perl -pi -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 %build
