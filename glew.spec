@@ -16,6 +16,8 @@ BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
+Patch0:		glew-1.5.0-GLAPIENTRY.patch
+
 %description
 The goal of the OpenGL Extension Wrangler Library (GLEW) is to assist C/C++
 OpenGL developers with two tedious tasks: initializing and using extensions
@@ -52,6 +54,7 @@ Development files for using the %{name} library.
 
 %prep
 %setup -q -n %{name}
+%patch0 -p1 -b .GLAPIENTRY
 perl -pi -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 %build
