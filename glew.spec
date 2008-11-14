@@ -6,17 +6,17 @@
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.5.0
-Release:	%mkrel 2
+Version:	1.5.1
+Release:	%mkrel 1
 Group:		Development/C
 License:	BSD
 URL:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}-src.tgz
+Patch0:		glew-1.5.0-GLAPIENTRY.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
+BuildRequires:	file
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
-
-Patch0:		glew-1.5.0-GLAPIENTRY.patch
 
 %description
 The goal of the OpenGL Extension Wrangler Library (GLEW) is to assist C/C++
@@ -53,8 +53,14 @@ Provides:	%mklibname %{name} 1.3 -d
 Development files for using the %{name} library.
 
 %prep
+
 %setup -q -n %{name}
-%patch0 -p1 -b .GLAPIENTRY
+%patch0 -p0 -b .GLAPIENTRY
+
+# strip away annoying ^M
+find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
+find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
+
 perl -pi -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 %build
