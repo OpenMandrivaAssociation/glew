@@ -6,13 +6,13 @@
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.5.1
-Release:	%mkrel 3
+Version:	1.5.2
+Release:	%mkrel 1
 Group:		Development/C
 License:	BSD
 URL:		http://glew.sourceforge.net
-Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}-src.tgz
-Patch0:		glew-1.5.0-GLAPIENTRY.patch
+Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
+#Patch0:		glew-1.5.0-GLAPIENTRY.patch
 BuildRequires:	X11-devel
 BuildRequires:	MesaGLU-devel
 BuildRequires:	file
@@ -54,8 +54,8 @@ Development files for using the %{name} library.
 
 %prep
 
-%setup -q -n %{name}
-%patch0 -p0 -b .GLAPIENTRY
+%setup -q
+#%patch0 -p0 -b .GLAPIENTRY
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
@@ -64,8 +64,8 @@ find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
 perl -pi -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 #fix txt/doc files permissions
-chmod 0755 %{_builddir}/%{name}/doc
-chmod 0644 %{_builddir}/%{name}/doc/* %{_builddir}/%{name}/README.txt
+chmod 0755 doc
+chmod 0644 doc/* README.txt
 
 %build
 %make CFLAGS.EXTRA="%{optflags} -fPIC"
