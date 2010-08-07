@@ -55,7 +55,7 @@ Development files for using the %{name} library.
 %prep
 
 %setup -q
-#%patch0 -p0 -b .GLAPIENTRY
+#%%patch0 -p0 -b .GLAPIENTRY
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
