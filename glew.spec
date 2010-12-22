@@ -2,8 +2,6 @@
 %define	libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
-%define _requires_exceptions devel(/lib/libNoVersion)
-
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	1.5.5
@@ -13,8 +11,8 @@ License:	BSD
 URL:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
 #Patch0:		glew-1.5.0-GLAPIENTRY.patch
-BuildRequires:	X11-devel
-BuildRequires:	MesaGLU-devel
+BuildRequires:	libx11-devel
+BuildRequires:	mesaglu-devel
 BuildRequires:	file
 BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
@@ -68,7 +66,7 @@ chmod 0755 doc
 chmod 0644 doc/* README.txt
 
 %build
-%make CFLAGS.EXTRA="%{optflags} -fPIC"
+%make CFLAGS.EXTRA="%{optflags} -fPIC" LD="cc %ldflags" CC="cc %ldflags"
 
 %install
 rm -rf %{buildroot}
