@@ -10,7 +10,7 @@ Group:		Development/C
 License:	BSD
 URL:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
-#Patch0:		glew-1.5.0-GLAPIENTRY.patch
+Patch1:		glew-1.5.7-link.patch
 BuildRequires:	libx11-devel
 BuildRequires:	mesaglu-devel
 BuildRequires:	file
@@ -53,7 +53,7 @@ Development files for using the %{name} library.
 %prep
 
 %setup -q
-#%%patch0 -p0 -b .GLAPIENTRY
+%patch1 -p1
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
