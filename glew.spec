@@ -1,16 +1,16 @@
-%define	major 1.5
+%define	major 1.7
 %define	libname %mklibname %{name} %{major}
 %define develname %mklibname %{name} -d
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.5.8
+Version:	1.7.0
 Release:	%mkrel 1
 Group:		Development/C
 License:	BSD
 URL:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
-Patch1:		glew-1.5.7-link.patch
+Patch1:		glew_make_file_DEST.patch
 BuildRequires:	libx11-devel
 BuildRequires:	mesaglu-devel
 BuildRequires:	file
@@ -56,21 +56,18 @@ Development files for using the %{name} library.
 %patch1 -p1
 
 # strip away annoying ^M
-find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
-find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
-
-perl -pi -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
+sed -i -e 's/\r//g' config/config.guess
 
 #fix txt/doc files permissions
 chmod 0755 doc
 chmod 0644 doc/* README.txt
 
 %build
-%make CFLAGS.EXTRA="%{optflags} -fPIC" LD="cc %ldflags" CC="cc %ldflags"
+make %{?_smp_mflags} CFLAGS.EXTRA="$RPM_OPT_FLAGS" includedir=%{_includedir} GLEW_DEST= libdir=%{_libdir} bindir=%{_bindir}
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std BINDIR=%{buildroot}%{_bindir} LIBDIR=%{buildroot}%{_libdir} INCDIR=%{buildroot}%{_includedir}/GL 
+make install.all GLEW_DEST="$RPM_BUILD_ROOT" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
@@ -96,5 +93,8 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW.a
+%{_libdir}/libGLEWmx.a
+%{_libdir}/libGLEWmx.so*
+%{_libdir}/pkgconfig/glewmx.pc
 %{_libdir}/libGLEW.so
 %{_libdir}/pkgconfig/glew.pc
