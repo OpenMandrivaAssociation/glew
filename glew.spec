@@ -1,11 +1,12 @@
 %define	major 1.7
 %define	libname %mklibname %{name} %{major}
+%define	libnamemx %mklibname %{name}mx %{major}
 %define develname %mklibname %{name} -d
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	1.7.0
-Release:	%mkrel 1
+Release:	2
 Group:		Development/C
 License:	BSD
 URL:		http://glew.sourceforge.net
@@ -14,7 +15,6 @@ Patch1:		glew_make_file_DEST.patch
 BuildRequires:	libx11-devel
 BuildRequires:	mesaglu-devel
 BuildRequires:	file
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 The goal of the OpenGL Extension Wrangler Library (GLEW) is to assist C/C++
@@ -38,10 +38,18 @@ driver or not. OpenGL core and extension functionality is exposed via a
 single header file. GLEW currently supports a variety of platforms and
 operating systems, including Windows, Linux, Darwin, Irix, and Solaris.
 
+%package -n %{libmxname}
+Summary:	GLEWmx library
+Group:		System/Libraries
+
+%description -n %{libnamemx}
+This package contains the libGLEWmx libraries.
+
 %package -n %{develname}
 Summary:	Development files for using the %{name} library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libnamemx} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{name} 1.3 -d
@@ -63,18 +71,11 @@ chmod 0755 doc
 chmod 0644 doc/* README.txt
 
 %build
-make %{?_smp_mflags} CFLAGS.EXTRA="$RPM_OPT_FLAGS" includedir=%{_includedir} GLEW_DEST= libdir=%{_libdir} bindir=%{_bindir}
+%make CFLAGS.EXTRA="$RPM_OPT_FLAGS" includedir=%{_includedir} GLEW_DEST= libdir=%{_libdir} bindir=%{_bindir}
 
 %install
 rm -rf %{buildroot}
-make install.all GLEW_DEST="$RPM_BUILD_ROOT" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
+make install.all GLEW_DEST="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %clean
 rm -rf %{buildroot}
@@ -89,12 +90,16 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/libGLEW.so.%{major}*
 
+%files -n %{libnamemx}
+%defattr(-,root,root)
+%{_libdir}/libGLEWmx.so.%{major}*
+
 %files -n %{develname}
 %defattr(-,root,root)
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW.a
 %{_libdir}/libGLEWmx.a
-%{_libdir}/libGLEWmx.so*
-%{_libdir}/pkgconfig/glewmx.pc
 %{_libdir}/libGLEW.so
+%{_libdir}/libGLEWmx.so
 %{_libdir}/pkgconfig/glew.pc
+%{_libdir}/pkgconfig/glewmx.pc
