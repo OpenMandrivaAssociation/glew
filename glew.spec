@@ -38,7 +38,7 @@ driver or not. OpenGL core and extension functionality is exposed via a
 single header file. GLEW currently supports a variety of platforms and
 operating systems, including Windows, Linux, Darwin, Irix, and Solaris.
 
-%package -n %{libmxname}
+%package -n %{libnamemx}
 Summary:	GLEWmx library
 Group:		System/Libraries
 
