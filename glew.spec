@@ -1,19 +1,18 @@
-%define	major 1.7
+%define	major 1.9
 %define	libname %mklibname %{name} %{major}
-%define	libnamemx %mklibname %{name}mx %{major}
 %define develname %mklibname %{name} -d
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.7.0
-Release:	2
+Version:	1.9.0
+Release:	%mkrel 1
 Group:		Development/C
-License:	BSD
+License:	BSD and MIT
 URL:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
-Patch1:		glew_make_file_DEST.patch
 BuildRequires:	libx11-devel
 BuildRequires:	mesaglu-devel
+BuildRequires:	libxi-devel libxmu-devel
 BuildRequires:	file
 
 %description
@@ -24,6 +23,7 @@ mechanism to determine whether a certain extension is supported by the
 driver or not. OpenGL core and extension functionality is exposed via a
 single header file. GLEW currently supports a variety of platforms and
 operating systems, including Windows, Linux, Darwin, Irix, and Solaris. 
+
 
 %package -n %{libname}
 Summary:	GLEW library
@@ -38,18 +38,11 @@ driver or not. OpenGL core and extension functionality is exposed via a
 single header file. GLEW currently supports a variety of platforms and
 operating systems, including Windows, Linux, Darwin, Irix, and Solaris.
 
-%package -n %{libnamemx}
-Summary:	GLEWmx library
-Group:		System/Libraries
-
-%description -n %{libnamemx}
-This package contains the libGLEWmx libraries.
 
 %package -n %{develname}
 Summary:	Development files for using the %{name} library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libnamemx} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 Provides:	lib%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{name} 1.3 -d
@@ -58,48 +51,38 @@ Provides:	%mklibname %{name} 1.3 -d
 %description -n	%{develname}
 Development files for using the %{name} library.
 
+
 %prep
 
 %setup -q
-%patch1 -p1
 
 # strip away annoying ^M
-sed -i -e 's/\r//g' config/config.guess
+find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
+find . -type f|xargs file|grep 'text'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
+
+perl -pi -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 #fix txt/doc files permissions
 chmod 0755 doc
 chmod 0644 doc/* README.txt
 
 %build
-%make CFLAGS.EXTRA="$RPM_OPT_FLAGS" includedir=%{_includedir} GLEW_DEST= libdir=%{_libdir} bindir=%{_bindir}
+%make CFLAGS.EXTRA="%{optflags} -fPIC" GLEW_DEST= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
-rm -rf %{buildroot}
-make install.all GLEW_DEST="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+make install.all GLEW_DEST="%{buildroot}%{_usr}" bindir=%{buildroot}%{_bindir} libdir=%{buildroot}%{_libdir} includedir=%{buildroot}%{_includedir}/GL
+rm -f %{buildroot}%{_libdir}/*.a
 
-%clean
-rm -rf %{buildroot}
+chmod 0755 %{buildroot}%{_libdir}/*.so*
 
 %files
-%defattr(-,root,root)
 %doc README.txt doc
-%{_bindir}/glewinfo
-%{_bindir}/visualinfo
+%{_bindir}/*
 
 %files -n %{libname}
-%defattr(-,root,root)
-%{_libdir}/libGLEW.so.%{major}*
-
-%files -n %{libnamemx}
-%defattr(-,root,root)
-%{_libdir}/libGLEWmx.so.%{major}*
+%{_libdir}/libGLEW*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %{_includedir}/GL/*.h
-%{_libdir}/libGLEW.a
-%{_libdir}/libGLEWmx.a
-%{_libdir}/libGLEW.so
-%{_libdir}/libGLEWmx.so
-%{_libdir}/pkgconfig/glew.pc
-%{_libdir}/pkgconfig/glewmx.pc
+%{_libdir}/libGLEW*.so
+%{_libdir}/pkgconfig/*.pc
