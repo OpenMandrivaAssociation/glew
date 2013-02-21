@@ -5,7 +5,7 @@
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	1.9.0
-Release:	%mkrel 1
+Release:	2
 Group:		Development/C
 License:	BSD and MIT
 URL:		http://glew.sourceforge.net
@@ -67,7 +67,7 @@ chmod 0755 doc
 chmod 0644 doc/* README.txt
 
 %build
-%make CFLAGS.EXTRA="%{optflags} -fPIC" GLEW_DEST= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+%make CFLAGS.EXTRA="%{optflags} -fPIC" GLEW_DEST= STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
 make install.all GLEW_DEST="%{buildroot}%{_usr}" bindir=%{buildroot}%{_bindir} libdir=%{buildroot}%{_libdir} includedir=%{buildroot}%{_includedir}/GL
