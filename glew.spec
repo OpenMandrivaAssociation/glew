@@ -11,6 +11,8 @@ Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
+Patch0:		0001-BUILD-respect-DESTDIR-variable.patch
+Patch1:		glew-1.9.0-makefile.patch
 
 BuildRequires:	file
 BuildRequires:	pkgconfig(glu)
@@ -54,6 +56,7 @@ Development files for using the %{name} library.
 
 %prep
 %setup -q
+%apply_patches
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
@@ -65,11 +68,14 @@ sed -i -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 chmod 0755 doc
 chmod 0644 doc/* README.txt
 
+sed -i 's|cc|%{__cc}|g' config/Makefile.linux
+
 %build
+%before_configure
 %make CFLAGS.EXTRA="%{optflags} -fPIC" GLEW_DEST= STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
-make install.all GLEW_DEST="%{buildroot}%{_usr}" bindir=%{buildroot}%{_bindir} libdir=%{buildroot}%{_libdir} includedir=%{buildroot}%{_includedir}/GL
+make install.all GLEW_DEST= DESTDIR="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 rm -f %{buildroot}%{_libdir}/*.a
 
 chmod 0755 %{buildroot}%{_libdir}/*.so*
