@@ -2,6 +2,7 @@
 %define	libname	%mklibname %{name} %{major}
 %define	libmx	%mklibname %{name}mx %{major}
 %define	devname	%mklibname %{name} -d
+%define _disable_lto 1
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
