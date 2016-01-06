@@ -1,4 +1,4 @@
-%define	major	1.10
+%define	major	1.13
 %define	libname	%mklibname %{name} %{major}
 %define	libmx	%mklibname %{name}mx %{major}
 %define	devname	%mklibname %{name} -d
@@ -6,15 +6,14 @@
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.10.0
-Release:	10
+Version:	1.13.0
+Release:	1
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
-Patch0:		0001-BUILD-respect-DESTDIR-variable.patch
-Patch1:		glew-1.9.0-makefile.patch
 
+BuildRequires:	cmake
 BuildRequires:	file
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(x11)
@@ -73,10 +72,10 @@ sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 
 %build
 %before_configure
-%make CFLAGS.EXTRA="%{optflags} -fPIC" GLEW_DEST= STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+%make CFLAGS.EXTRA="%{optflags} -fPIC" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
-make install.all GLEW_DEST= DESTDIR="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+make install.all DESTDIR="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 rm -f %{buildroot}%{_libdir}/*.a
 
 chmod 0755 %{buildroot}%{_libdir}/*.so*
