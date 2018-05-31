@@ -93,5 +93,5 @@ chmod 0755 %{buildroot}%{_libdir}/*.so*
 %files -n %{devname}
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW*.so
-%{_libdir}/pkgconfig/*.pc
+%{_libdir}/pkgconfig/%{name}.pc
 
