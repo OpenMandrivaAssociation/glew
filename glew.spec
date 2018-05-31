@@ -37,10 +37,11 @@ Group:		System/Libraries
 %description -n %{libname}
 This package contains a shared library for %{name}.
 
-%package -n %{libmx}
-Summary:	GLEW library
-Group:		System/Libraries
-Conflicts:	%{_lib}glew1.9 < 1.9.0-3
+# Support for GLEWmx is dropped since GLEW 2.0 (Penguin) https://github.com/arrayfire/arrayfire/issues/1515
+#package -n %{libmx}
+#Summary:	GLEW library
+#Group:		System/Libraries
+#Conflicts:	%{_lib}glew1.9 < 1.9.0-3
 
 %description -n %{libmx}
 This package contains a shared library for %{name}.
@@ -88,8 +89,8 @@ chmod 0755 %{buildroot}%{_libdir}/*.so*
 %files -n %{libname}
 %{_libdir}/libGLEW.so.%{major}*
 
-%files -n %{libmx}
-%{_libdir}/libGLEWmx.so.%{major}*
+#files -n %{libmx}
+#{_libdir}/libGLEWmx.so.%{major}*
 
 %files -n %{devname}
 %{_includedir}/GL/*.h
