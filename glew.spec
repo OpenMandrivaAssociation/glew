@@ -12,6 +12,7 @@ Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
+Patch0:   glew-2.0.0-pkgconfig.patch
 
 BuildRequires:	cmake
 BuildRequires:	file
