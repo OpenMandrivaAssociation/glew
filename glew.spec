@@ -66,7 +66,7 @@ sed -i -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 #fix txt/doc files permissions
 chmod 0755 doc
-chmod 0644 doc/* README.txt
+chmod 0644 doc/* README.md
 
 sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 
@@ -81,7 +81,7 @@ rm -f %{buildroot}%{_libdir}/*.a
 chmod 0755 %{buildroot}%{_libdir}/*.so*
 
 %files
-%doc README.txt doc
+%doc README.md doc
 %{_bindir}/*
 
 %files -n %{libname}
