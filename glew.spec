@@ -50,7 +50,7 @@ This package contains a shared library for %{name}.
 Summary:	Development files for using the %{name} library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libmx} = %{version}-%{release}
+#Requires:	%{libmx} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
