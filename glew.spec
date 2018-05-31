@@ -1,6 +1,6 @@
 %define	major	2.1
 %define	libname	%mklibname %{name} %{major}
-%define	libmx	%mklibname %{name}mx %{major}
+#define	libmx	%mklibname %{name}mx %{major}
 %define	devname	%mklibname %{name} -d
 %define _disable_lto 1
 
@@ -43,7 +43,7 @@ This package contains a shared library for %{name}.
 #Group:		System/Libraries
 #Conflicts:	%{_lib}glew1.9 < 1.9.0-3
 
-%description -n %{libmx}
+#description -n %{libmx}
 This package contains a shared library for %{name}.
 
 %package -n %{devname}
