@@ -1,17 +1,18 @@
-%define	major	1.13
+%define	major	2.1
 %define	libname	%mklibname %{name} %{major}
-%define	libmx	%mklibname %{name}mx %{major}
+#define	libmx	%mklibname %{name}mx %{major}
 %define	devname	%mklibname %{name} -d
 %define _disable_lto 1
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	1.13.0
+Version:	2.1.0
 Release:	1
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
+Patch0:   glew-2.0.0-pkgconfig.patch
 
 BuildRequires:	cmake
 BuildRequires:	file
@@ -36,19 +37,20 @@ Group:		System/Libraries
 %description -n %{libname}
 This package contains a shared library for %{name}.
 
-%package -n %{libmx}
-Summary:	GLEW library
-Group:		System/Libraries
-Conflicts:	%{_lib}glew1.9 < 1.9.0-3
+# Support for GLEWmx is dropped since GLEW 2.0 (Penguin) https://github.com/arrayfire/arrayfire/issues/1515
+#package -n %{libmx}
+#Summary:	GLEW library
+#Group:		System/Libraries
+#Conflicts:	%{_lib}glew1.9 < 1.9.0-3
 
-%description -n %{libmx}
+#description -n %{libmx}
 This package contains a shared library for %{name}.
 
 %package -n %{devname}
 Summary:	Development files for using the %{name} library
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Requires:	%{libmx} = %{version}-%{release}
+#Requires:	%{libmx} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
@@ -66,7 +68,7 @@ sed -i -e "s#-shared -soname#-shared -lc -soname#g" config/Makefile.linux
 
 #fix txt/doc files permissions
 chmod 0755 doc
-chmod 0644 doc/* README.txt
+chmod 0644 doc/* README.md
 
 sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 
@@ -81,17 +83,17 @@ rm -f %{buildroot}%{_libdir}/*.a
 chmod 0755 %{buildroot}%{_libdir}/*.so*
 
 %files
-%doc README.txt doc
+%doc README.md doc
 %{_bindir}/*
 
 %files -n %{libname}
 %{_libdir}/libGLEW.so.%{major}*
 
-%files -n %{libmx}
-%{_libdir}/libGLEWmx.so.%{major}*
+#files -n %{libmx}
+#{_libdir}/libGLEWmx.so.%{major}*
 
 %files -n %{devname}
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW*.so
-%{_libdir}/pkgconfig/*.pc
+%{_libdir}/pkgconfig/%{name}.pc
 
