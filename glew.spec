@@ -78,7 +78,7 @@ sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 
 %install
 make install.all DESTDIR="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
-rm -f %{buildroot}%{_libdir}/*.a
+#rm -f %{buildroot}%{_libdir}/*.a
 
 chmod 0755 %{buildroot}%{_libdir}/*.so*
 
