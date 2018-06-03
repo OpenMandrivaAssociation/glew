@@ -77,7 +77,7 @@ sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 %make CFLAGS.EXTRA="%{optflags} -fPIC" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
-make install.all DESTDIR="%{buildroot}" libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+make install.all DESTDIR="%{buildroot}" LIBDIR=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 rm -f %{buildroot}%{_libdir}/*.a
 
 chmod 0755 %{buildroot}%{_libdir}/*.so*
