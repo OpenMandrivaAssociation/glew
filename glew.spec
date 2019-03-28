@@ -7,12 +7,12 @@
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	2.1.0
-Release:	4
+Release:	5
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
-Patch0:   glew-2.0.0-pkgconfig.patch
+Patch0:		glew-2.0.0-pkgconfig.patch
 
 BuildRequires:	cmake
 BuildRequires:	file
@@ -44,7 +44,7 @@ This package contains a shared library for %{name}.
 #Conflicts:	%{_lib}glew1.9 < 1.9.0-3
 
 #description -n %{libmx}
-This package contains a shared library for %{name}.
+#This package contains a shared library for %{name}.
 
 %package -n %{devname}
 Summary:	Development files for using the %{name} library
@@ -53,12 +53,11 @@ Requires:	%{libname} = %{version}-%{release}
 #Requires:	%{libmx} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n	%{devname}
+%description -n %{devname}
 Development files for using the %{name} library.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 # strip away annoying ^M
 find . -type f|xargs file|grep 'CRLF'|cut -d: -f1|xargs perl -p -i -e 's/\r//'
@@ -74,7 +73,7 @@ sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 
 %build
 %before_configure
-%make CFLAGS.EXTRA="%{optflags} -fPIC" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+%make_build CFLAGS.EXTRA="%{optflags} -fPIC" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
 make install.all DESTDIR="%{buildroot}" LIBDIR=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
@@ -96,4 +95,3 @@ chmod 0755 %{buildroot}%{_libdir}/*.so*
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW*.so
 %{_libdir}/pkgconfig/%{name}.pc
-
