@@ -1,4 +1,4 @@
-%define	major	2.1
+%define	major	2.2
 %define	libname	%mklibname %{name} %{major}
 #define	libmx	%mklibname %{name}mx %{major}
 %define	devname	%mklibname %{name} -d
@@ -6,8 +6,8 @@
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	2.1.0
-Release:	5
+Version:	2.2.0
+Release:	1
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
