@@ -1,13 +1,20 @@
+# glew is used by mesa-demos - and we want 32-bit glxinfo for debugging
+%ifarch %{x86_64}
+%bcond_without compat32
+%endif
+
 %define	major	2.2
 %define	libname	%mklibname %{name} %{major}
 #define	libmx	%mklibname %{name}mx %{major}
 %define	devname	%mklibname %{name} -d
+%define lib32name %mklib32name %{name} %{major}
+%define dev32name %mklib32name %{name} -d
 %define _disable_lto 1
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	2.2.0
-Release:	1
+Release:	2
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
@@ -20,6 +27,16 @@ BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xi)
 BuildRequires:	pkgconfig(xmu)
+
+%if %{with compat32}
+BuildRequires:	devel(libGLU)
+BuildRequires:	devel(libX11)
+BuildRequires:	devel(libXi)
+BuildRequires:	devel(libXmu)
+BuildRequires:	devel(libxcb)
+BuildRequires:	devel(libXau)
+BuildRequires:	devel(libXdmcp)
+%endif
 
 %description
 The goal of the OpenGL Extension Wrangler Library (GLEW) is to assist C/C++
@@ -56,6 +73,24 @@ Provides:	%{name}-devel = %{version}-%{release}
 %description -n %{devname}
 Development files for using the %{name} library.
 
+%if %{with compat32}
+%package -n %{lib32name}
+Summary:	GLEW library (32-bit)
+Group:		System/Libraries
+
+%description -n %{lib32name}
+This package contains a shared library for %{name}.
+
+%package -n %{dev32name}
+Summary:	Development files for using the %{name} library (32-bit)
+Group:		Development/C
+Requires:	%{devname} = %{version}-%{release}
+Requires:	%{lib32name} = %{version}-%{release}
+
+%description -n %{dev32name}
+Development files for using the %{name} library.
+%endif
+
 %prep
 %autosetup -p1
 
@@ -71,11 +106,23 @@ chmod 0644 doc/* README.md
 
 sed -i 's|cc|%{__cc}|g' config/Makefile.linux
 
+%if %{with compat32}
+mkdir -p build32
+cp -a $(ls -1 |grep -v build32) build32/
+%endif
+
 %build
 %before_configure
-%make_build CFLAGS.EXTRA="%{optflags} -fPIC" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
+%if %{with compat32}
+%make_build -C build32 CC="%{_bindir}/gcc -m32" LD="%{_bindir}/gcc -m32" CFLAGS.EXTRA="$(echo %{optflags} |sed -e 's,-m64,,g;s,-flto,,g') -fPIC -m32" STRIP= libdir=%{_prefix}/lib bindir=%{_bindir} includedir=%{_includedir}
+%endif
+%make_build CFLAGS.EXTRA="%{optflags} -fPIC -flto" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
 %install
+%if %{with compat32}
+make -C build32 install.all DESTDIR="%{buildroot}" CC="%{_bindir}/gcc -m32" LD="%{_bindir}/gcc -m32" LIBDIR=%{_prefix}/lib bindir=%{_bindir} includedir=%{_includedir}
+rm -f %{buildroot}%{_prefix}/lib/*.a
+%endif
 make install.all DESTDIR="%{buildroot}" LIBDIR=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 rm -f %{buildroot}%{_libdir}/*.a
 
@@ -95,3 +142,10 @@ chmod 0755 %{buildroot}%{_libdir}/*.so*
 %{_includedir}/GL/*.h
 %{_libdir}/libGLEW*.so
 %{_libdir}/pkgconfig/%{name}.pc
+
+%files -n %{lib32name}
+%{_prefix}/lib/libGLEW.so.%{major}*
+
+%files -n %{dev32name}
+%{_prefix}/lib/libGLEW*.so
+%{_prefix}/lib/pkgconfig/%{name}.pc
