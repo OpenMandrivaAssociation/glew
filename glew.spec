@@ -36,6 +36,8 @@ BuildRequires:	devel(libXmu)
 BuildRequires:	devel(libxcb)
 BuildRequires:	devel(libXau)
 BuildRequires:	devel(libXdmcp)
+BuildRequires:	devel(libGL)
+BUildRequires:	devel(libGLdispatch)
 %endif
 
 %description
