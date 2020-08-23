@@ -21,7 +21,7 @@ Url:		http://glew.sourceforge.net
 Source0:	http://downloads.sourceforge.net/glew/%{name}-%{version}.tgz
 Patch0:		glew-2.0.0-pkgconfig.patch
 
-BuildRequires:	cmake
+BuildRequires:	make
 BuildRequires:	file
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(x11)
@@ -114,7 +114,7 @@ cp -a $(ls -1 |grep -v build32) build32/
 %build
 %before_configure
 %if %{with compat32}
-%make_build -C build32 CC="%{_bindir}/gcc -m32" LD="%{_bindir}/gcc -m32" CFLAGS.EXTRA="$(echo %{optflags} |sed -e 's,-m64,,g;s,-flto,,g') -fPIC -m32" STRIP= libdir=%{_prefix}/lib bindir=%{_bindir} includedir=%{_includedir}
+%make_build -C build32 CC="%{_bindir}/gcc -m32" LD="%{_bindir}/gcc -m32" CFLAGS.EXTRA="$(echo %{optflags} |sed -e 's,-m64,,g;s,-flto,,g') -fPIC -m32" STRIP= libdir=%{_prefix}/lib bindir=%{_bindir} includedir=%{_includedir} ARCH64=false LDFLAGS.EXTRA=""
 %endif
 %make_build CFLAGS.EXTRA="%{optflags} -fPIC -flto" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir}
 
