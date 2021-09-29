@@ -145,9 +145,11 @@ chmod 0755 %{buildroot}%{_libdir}/*.so*
 %{_libdir}/libGLEW*.so
 %{_libdir}/pkgconfig/%{name}.pc
 
+%if %{with compat32}
 %files -n %{lib32name}
 %{_prefix}/lib/libGLEW.so.%{major}*
 
 %files -n %{dev32name}
 %{_prefix}/lib/libGLEW*.so
 %{_prefix}/lib/pkgconfig/%{name}.pc
+%endif
