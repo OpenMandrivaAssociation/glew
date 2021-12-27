@@ -1,0 +1,28 @@
+From 95329dc4a6a5d2ea17e4be6a17255bb23c385c66 Mon Sep 17 00:00:00 2001
+From: Danilo Spinella <danyspin97@protonmail.com>
+Date: Mon, 27 May 2019 10:22:51 +0200
+Subject: [PATCH 12/30] GLEW_EGL: Fix EGL library check
+
+---
+ build/cmake/CMakeLists.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index 419c243..a401e03 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -87,9 +87,9 @@ endif ()
+ 
+ if (GLEW_EGL AND UNIX)
+   add_definitions (-DGLEW_EGL)
+-  if (OpenGL::EGL)
++  if (NOT OpenGL_EGL_FOUND)
+     message (FATAL_ERROR "EGL library set but not found.")
+-  endif()
++  endif ()
+   set (GLEW_LIBRARIES ${OPENGL_LIBRARIES} ${OPENGL_egl_LIBRARY})
+ endif ()
+ 
+-- 
+2.34.1
+

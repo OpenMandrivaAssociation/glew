@@ -1,0 +1,18 @@
+From 0b97f2568d31e14d96e600e31b14522e679cad35 Mon Sep 17 00:00:00 2001
+From: Alexey Tereshenkov
+ <59651540+alexey-tereshenkov-oxb@users.noreply.github.com>
+Date: Mon, 6 Apr 2020 09:26:18 +0100
+Subject: [PATCH 02/30] Rename lgtm.yml to hide the file
+
+---
+ lgtm.yml => .lgtm.yml | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename lgtm.yml => .lgtm.yml (100%)
+
+diff --git a/lgtm.yml b/.lgtm.yml
+similarity index 100%
+rename from lgtm.yml
+rename to .lgtm.yml
+-- 
+2.34.1
+

@@ -1,0 +1,25 @@
+From ea2076658a5bdcc300ac8fde025a296b6a7a7817 Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sat, 17 Jul 2021 13:52:25 +1000
+Subject: [PATCH 21/30] glewGetErrorString for GLEW_ERROR_NO_GLX_DISPLAY (added
+ in 2016)
+
+---
+ auto/src/glew_init_tail.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/auto/src/glew_init_tail.c b/auto/src/glew_init_tail.c
+index e21ce96..94af367 100644
+--- a/auto/src/glew_init_tail.c
++++ b/auto/src/glew_init_tail.c
+@@ -8,6 +8,7 @@ const GLubyte * GLEWAPIENTRY glewGetErrorString (GLenum error)
+     (const GLubyte*)"Missing GL version",
+     (const GLubyte*)"GL 1.1 and up are not supported",
+     (const GLubyte*)"GLX 1.2 and up are not supported",
++    (const GLubyte*)"No GLX display",
+     (const GLubyte*)"Unknown error"
+   };
+   const size_t max_error = sizeof(_glewErrorString)/sizeof(*_glewErrorString) - 1;
+-- 
+2.34.1
+

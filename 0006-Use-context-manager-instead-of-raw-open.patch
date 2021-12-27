@@ -1,0 +1,38 @@
+From 4e5fe20519267112ec24591b7a370aa78ac26f24 Mon Sep 17 00:00:00 2001
+From: Xavier Bonaventura <xavibonaventura@gmail.com>
+Date: Sun, 27 Dec 2020 14:44:39 +0100
+Subject: [PATCH 06/30] Use context manager instead of raw open
+
+Raw open should be avoided to prevent that in case of an exception
+the file is not closed.
+This also has the advantage that if the user forgets to call close
+the file is still closed.
+---
+ auto/bin/parse_xml.py | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/auto/bin/parse_xml.py b/auto/bin/parse_xml.py
+index 2bcefc9..782e42c 100755
+--- a/auto/bin/parse_xml.py
++++ b/auto/bin/parse_xml.py
+@@ -148,13 +148,11 @@ if __name__ == '__main__':
+ 
+     if len(options['core']):
+         for i in api[2].keys():
+-            f = open('%s/%s'%(options['core'], i), 'wb')
+-            writeExtension(f, i, api[2][i], api[0], api[1])
+-            f.close()
++            with open('%s/%s'%(options['core'], i), 'wb') as f:
++                writeExtension(f, i, api[2][i], api[0], api[1])
+ 
+     if len(options['extensions']):
+         for i in api[3].keys():
+-            f = open('%s/%s'%(options['extensions'], i), 'wb')
+-            writeExtension(f, i, api[3][i], api[0], api[1])
+-            f.close()
++            with open('%s/%s'%(options['extensions'], i), 'wb') as f:
++                writeExtension(f, i, api[3][i], api[0], api[1])
+ 
+-- 
+2.34.1
+

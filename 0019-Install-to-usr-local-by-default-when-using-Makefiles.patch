@@ -1,0 +1,31 @@
+From 679a3b17fa169a7838ba321616ad703ba8a8aa6d Mon Sep 17 00:00:00 2001
+From: Ross Burton <ross.burton@arm.com>
+Date: Thu, 22 Jul 2021 16:24:04 +0100
+Subject: [PATCH 19/30] Install to /usr/local by default when using Makefiles
+
+Software should install to /usr/local by default, as /usr is for the
+operating system managed libraries.
+
+Closes #52.
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e5222f9..d0e4614 100644
+--- a/Makefile
++++ b/Makefile
+@@ -40,8 +40,8 @@ else
+ $(error "Platform '$(SYSTEM)' not supported")
+ endif
+ 
+-GLEW_PREFIX ?= /usr
+-GLEW_DEST ?= /usr
++GLEW_PREFIX ?= /usr/local
++GLEW_DEST ?= /usr/local
+ BINDIR    ?= $(GLEW_DEST)/bin
+ LIBDIR    ?= $(GLEW_DEST)/lib
+ INCDIR    ?= $(GLEW_DEST)/include/GL
+-- 
+2.34.1
+

@@ -1,0 +1,32 @@
+From fb0f210598ef1a55fcf061c0a0484491881fc6d0 Mon Sep 17 00:00:00 2001
+From: Xavier Bonaventura <xavibonaventura@gmail.com>
+Date: Sun, 10 Jan 2021 10:29:42 +0100
+Subject: [PATCH 14/30] Use os.path.join to create paths
+
+Paths should be created using os.path.join with this way is platform
+independent.
+---
+ auto/bin/parse_xml.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/auto/bin/parse_xml.py b/auto/bin/parse_xml.py
+index 6cbe0ec..28ecb9f 100755
+--- a/auto/bin/parse_xml.py
++++ b/auto/bin/parse_xml.py
+@@ -135,11 +135,11 @@ if __name__ == '__main__':
+ 
+     if len(options['core']):
+         for i in api[2].keys():
+-            with open('%s/%s'%(options['core'], i), 'wb') as f:
++            with open(os.path.join(options['core'], i), 'wb') as f:
+                 writeExtension(f, i, api[2][i], api[0], api[1])
+ 
+     if len(options['extensions']):
+         for i in api[3].keys():
+-            with open('%s/%s'%(options['extensions'], i), 'wb') as f:
++            with open(os.path.join(options['extensions'], i), 'wb') as f:
+                 writeExtension(f, i, api[3][i], api[0], api[1])
+ 
+-- 
+2.34.1
+

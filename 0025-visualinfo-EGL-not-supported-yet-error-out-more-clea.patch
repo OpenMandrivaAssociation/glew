@@ -1,0 +1,77 @@
+From 9e6361b357e99f0527d7da5c07f42ccf4327a5e9 Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 29 Aug 2021 18:18:50 +1000
+Subject: [PATCH 25/30] visualinfo: EGL not supported yet, error out more
+ clearly
+
+Also, remove GLEW_MX support from visualinfo
+---
+ src/visualinfo.c | 30 ++++++++----------------------
+ 1 file changed, 8 insertions(+), 22 deletions(-)
+
+diff --git a/src/visualinfo.c b/src/visualinfo.c
+index 6879f78..1de1fa7 100644
+--- a/src/visualinfo.c
++++ b/src/visualinfo.c
+@@ -4,7 +4,7 @@
+ ** Copyright (C) Nate Robins, 1997
+ **               Michael Wimmer, 1999
+ **               Milan Ikits, 2002-2008
+-**               Nigel Stewart, 2008-2019
++**               Nigel Stewart, 2008-2021
+ **
+ ** visualinfo is a small utility that displays all available visuals,
+ ** aka. pixelformats, in an OpenGL system along with renderer version
+@@ -48,18 +48,6 @@
+ #include <GL/glxew.h>
+ #endif
+ 
+-#ifdef GLEW_MX
+-GLEWContext _glewctx;
+-#  define glewGetContext() (&_glewctx)
+-#  ifdef _WIN32
+-WGLEWContext _wglewctx;
+-#    define wglewGetContext() (&_wglewctx)
+-#  elif !defined(__APPLE__) && !defined(__HAIKU__) || defined(GLEW_APPLE_GLX)
+-GLXEWContext _glxewctx;
+-#    define glxewGetContext() (&_glxewctx)
+-#  endif
+-#endif /* GLEW_MX */
+-
+ typedef struct GLContextStruct
+ {
+ #if defined(GLEW_OSMESA)
+@@ -123,6 +111,13 @@ main (int argc, char** argv)
+     return 1;
+   }
+ 
++#if defined(GLEW_EGL)
++  {
++    fprintf(stderr, "Error [main]: EGL not supported by visualinfo.\n");
++    return 1;
++  }
++#endif
++
+   /* ---------------------------------------------------------------------- */
+   /* create OpenGL rendering context */
+   InitContext(&ctx);
+@@ -136,16 +131,7 @@ main (int argc, char** argv)
+   /* ---------------------------------------------------------------------- */
+   /* initialize GLEW */
+   glewExperimental = GL_TRUE;
+-#ifdef GLEW_MX
+-  err = glewContextInit(glewGetContext());
+-#  ifdef _WIN32
+-  err = err || wglewContextInit(wglewGetContext());
+-#  elif !defined(__APPLE__) && !defined(__HAIKU__) || defined(GLEW_APPLE_GLX)
+-  err = err || glxewContextInit(glxewGetContext());
+-#  endif
+-#else
+   err = glewInit();
+-#endif
+   if (GLEW_OK != err)
+   {
+     fprintf(stderr, "Error [main]: glewInit failed: %s\n", glewGetErrorString(err));
+-- 
+2.34.1
+

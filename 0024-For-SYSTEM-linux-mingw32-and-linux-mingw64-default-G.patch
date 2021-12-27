@@ -1,0 +1,68 @@
+From 247baa9e2030aee20f0af6c48e64dc4fff7ae6d9 Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 29 Aug 2021 09:30:13 +1000
+Subject: [PATCH 24/30] For SYSTEM linux-mingw32 and linux-mingw64 default
+ GLEW_DEST more appropriately
+
+---
+ config/Makefile.linux-mingw32 | 8 +++++---
+ config/Makefile.linux-mingw64 | 8 +++++---
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/config/Makefile.linux-mingw32 b/config/Makefile.linux-mingw32
+index e4e4d5f..5b298a5 100644
+--- a/config/Makefile.linux-mingw32
++++ b/config/Makefile.linux-mingw32
+@@ -1,17 +1,19 @@
+ # For cross-compiling from Linux to Windows 32-bit using mingw32
+ # http://mingw-w64.org/
+ #
++# Ubuntu/Debian:
+ # $ sudo apt install mingw-w64
+ # $ make SYSTEM=linux-mingw32
+ 
+-NAME  := glew32
+-HOST  := i686-w64-mingw32
++NAME      := glew32
++HOST      := i686-w64-mingw32
++GLEW_DEST ?= /usr/local/$(HOST)
+ CC    := $(HOST)-gcc
+ LD    := $(HOST)-ld
+ LN    :=
+ STRIP :=
+ LDFLAGS.GL = -L/usr/$(HOST)/lib -lopengl32 -lgdi32 -luser32 -lkernel32
+-CFLAGS.EXTRA  += -fno-builtin -fno-stack-protector
++CFLAGS.EXTRA  += -fno-builtin -fno-stack-protector -Wno-cast-function-type
+ WARN = -Wall -W
+ POPT = -O2
+ BIN.SUFFIX = .exe
+diff --git a/config/Makefile.linux-mingw64 b/config/Makefile.linux-mingw64
+index 33db444..4168df6 100644
+--- a/config/Makefile.linux-mingw64
++++ b/config/Makefile.linux-mingw64
+@@ -1,17 +1,19 @@
+ # For cross-compiling from Linux to Windows 64-bit using mingw64
+ # http://mingw-w64.org/
+ #
++# Ubuntu/Debian:
+ # $ sudo apt install mingw-w64
+ # $ make SYSTEM=linux-mingw64
+ 
+-NAME  := glew32
+-HOST  := x86_64-w64-mingw32
++NAME      := glew32
++HOST      := x86_64-w64-mingw32
++GLEW_DEST ?= /usr/local/$(HOST)
+ CC    := $(HOST)-gcc
+ LD    := $(HOST)-ld
+ LN    :=
+ STRIP :=
+ LDFLAGS.GL = -L/usr/$(HOST)/lib -lopengl32 -lgdi32 -luser32 -lkernel32
+-CFLAGS.EXTRA  += -fno-builtin -fno-stack-protector
++CFLAGS.EXTRA  += -fno-builtin -fno-stack-protector -Wno-cast-function-type
+ WARN = -Wall -W
+ POPT = -O2
+ BIN.SUFFIX = .exe
+-- 
+2.34.1
+

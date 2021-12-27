@@ -1,0 +1,48 @@
+From e34bb212f65a225e56b8a76234822a29c37ea5cb Mon Sep 17 00:00:00 2001
+From: Julien Schueller <schueller@phimeca.com>
+Date: Tue, 2 Mar 2021 14:22:45 +0100
+Subject: [PATCH 15/30] CMake: Add X11/EGL options
+
+---
+ build/cmake/CMakeLists.txt | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index a401e03..2649bd0 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -24,6 +24,8 @@ option (GLEW_OSMESA "OSMesa mode" OFF)
+ if (APPLE)
+     option (BUILD_FRAMEWORK "Build Framework bundle for OSX" OFF)
+ endif ()
++option (GLEW_X11 "X11 mode" ON)
++option (GLEW_EGL "EGL mode" OFF)
+ 
+ set (GLEW_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+ 
+@@ -42,9 +44,12 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+ 
+ find_package (OpenGL REQUIRED)
+ 
++set (GLEW_LIBRARIES ${OPENGL_LIBRARIES})
++
+ # X11 required except for Windows and Apple OSX platforms
+-if (NOT WIN32 AND NOT APPLE)
++if (GLEW_X11 AND NOT WIN32 AND NOT APPLE)
+   find_package (X11)
++  list (APPEND GLEW_LIBRARIES ${X11_LIBRARIES})
+ endif()
+ 
+ if (WIN32)
+@@ -54,8 +59,6 @@ else ()
+   set (DLL_PREFIX lib)
+ endif ()
+ 
+-set (GLEW_LIBRARIES ${OPENGL_LIBRARIES} ${X11_LIBRARIES})
+-
+ add_definitions (-DGLEW_NO_GLU)
+ 
+ #### Regal mode ####
+-- 
+2.34.1
+

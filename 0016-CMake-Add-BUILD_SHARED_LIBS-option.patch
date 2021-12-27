@@ -1,0 +1,56 @@
+From 2b16160853ed0ab271903ed4a8aaee8399a0de8a Mon Sep 17 00:00:00 2001
+From: Julien Schueller <schueller@phimeca.com>
+Date: Thu, 18 Mar 2021 16:41:23 +0100
+Subject: [PATCH 16/30] CMake: Add BUILD_SHARED_LIBS option
+
+---
+ build/cmake/CMakeLists.txt | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index 2649bd0..9ff5c9f 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -26,6 +26,7 @@ if (APPLE)
+ endif ()
+ option (GLEW_X11 "X11 mode" ON)
+ option (GLEW_EGL "EGL mode" OFF)
++option (BUILD_SHARED_LIBS "install/link shared instead of static libs" ON)
+ 
+ set (GLEW_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+ 
+@@ -162,11 +163,9 @@ else()
+ endif()
+ 
+ set(targets_to_install "")
+-if(NOT DEFINED BUILD_SHARED_LIBS OR BUILD_SHARED_LIBS)
++if(BUILD_SHARED_LIBS)
+   list(APPEND targets_to_install glew)
+-endif()
+-
+-if(NOT DEFINED BUILD_SHARED_LIBS OR NOT BUILD_SHARED_LIBS)
++else ()
+   list(APPEND targets_to_install glew_s)
+ endif()
+ 
+@@ -184,7 +183,7 @@ if (BUILD_UTILS)
+     list (APPEND GLEWINFO_SRC_FILES ${GLEW_DIR}/build/glewinfo.rc)
+   endif ()
+   add_executable (glewinfo ${GLEWINFO_SRC_FILES})
+-  if(NOT DEFINED BUILD_SHARED_LIBS OR BUILD_SHARED_LIBS)
++  if(BUILD_SHARED_LIBS)
+      target_link_libraries (glewinfo glew)
+   else()
+      target_link_libraries (glewinfo glew_s)
+@@ -198,7 +197,7 @@ if (BUILD_UTILS)
+     list (APPEND VISUALINFO_SRC_FILES ${GLEW_DIR}/build/visualinfo.rc)
+   endif ()
+   add_executable (visualinfo ${VISUALINFO_SRC_FILES})
+-  if(NOT DEFINED BUILD_SHARED_LIBS OR BUILD_SHARED_LIBS)
++  if(BUILD_SHARED_LIBS)
+      target_link_libraries (visualinfo glew)
+   else()
+      target_link_libraries (visualinfo glew_s)
+-- 
+2.34.1
+

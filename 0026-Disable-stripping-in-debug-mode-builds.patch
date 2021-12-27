@@ -1,0 +1,24 @@
+From 037635a19261f936a9abc98ae4f82f354ba3a90f Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 29 Aug 2021 18:21:18 +1000
+Subject: [PATCH 26/30] Disable stripping in debug-mode builds
+
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index db698e9..9a6b9ef 100644
+--- a/Makefile
++++ b/Makefile
+@@ -76,6 +76,7 @@ DOS2UNIX ?= dos2unix -q
+ 
+ ifneq (,$(filter debug,$(MAKECMDGOALS)))
+ OPT = -g
++STRIP :=
+ else
+ OPT = $(POPT)
+ endif
+-- 
+2.34.1
+

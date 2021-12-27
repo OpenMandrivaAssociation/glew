@@ -1,0 +1,25 @@
+From 8c88a0858f33879ea693f89ef43b3d77c968806e Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 10 Jan 2021 11:52:31 +1000
+Subject: [PATCH 11/30] EGLEW: Wayland wl_buffer declaration for
+ WL_bind_wayland_display
+
+---
+ auto/src/eglew_head.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/auto/src/eglew_head.h b/auto/src/eglew_head.h
+index d064baf..121efaf 100644
+--- a/auto/src/eglew_head.h
++++ b/auto/src/eglew_head.h
+@@ -79,6 +79,7 @@ struct EGLClientPixmapHI;
+ struct AHardwareBuffer;
+ 
+ /* Wayland types for WL_bind_wayland_display purposes */
++struct wl_buffer;
+ struct wl_display;
+ struct wl_resource;
+ 
+-- 
+2.34.1
+

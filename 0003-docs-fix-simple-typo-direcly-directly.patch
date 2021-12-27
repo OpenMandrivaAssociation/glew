@@ -1,0 +1,28 @@
+From bfc724c6cc4f8cb39caf1d6ddc89b3e8045bbd17 Mon Sep 17 00:00:00 2001
+From: Tim Gates <tim.gates@iress.com>
+Date: Sat, 28 Nov 2020 09:26:48 +1100
+Subject: [PATCH 03/30] docs: fix simple typo, direcly -> directly
+
+There is a small typo in auto/src/glew_head.c.
+
+Should read `directly` rather than `direcly`.
+---
+ auto/src/glew_head.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/auto/src/glew_head.c b/auto/src/glew_head.c
+index dbd18f2..832ded7 100644
+--- a/auto/src/glew_head.c
++++ b/auto/src/glew_head.c
+@@ -28,7 +28,7 @@
+ #if defined(GLEW_EGL)
+ #elif defined(GLEW_REGAL)
+ 
+-/* In GLEW_REGAL mode we call direcly into the linked
++/* In GLEW_REGAL mode we call directly into the linked
+    libRegal.so glGetProcAddressREGAL for looking up
+    the GL function pointers. */
+ 
+-- 
+2.34.1
+

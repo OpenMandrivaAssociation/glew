@@ -1,0 +1,24 @@
+From 0fa5d1102419ae6e44342b19697615856400cb55 Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 10 Jan 2021 11:13:03 +1000
+Subject: [PATCH 08/30] Fixup: Install eglew.h too
+
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index 1da7eac..e5222f9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -236,6 +236,7 @@ install.include:
+ 	$(INSTALL) -m 0644 include/GL/wglew.h "$(DESTDIR)$(INCDIR)/"
+ 	$(INSTALL) -m 0644 include/GL/glew.h "$(DESTDIR)$(INCDIR)/"
+ 	$(INSTALL) -m 0644 include/GL/glxew.h "$(DESTDIR)$(INCDIR)/"
++	$(INSTALL) -m 0644 include/GL/eglew.h "$(DESTDIR)$(INCDIR)/"
+ 
+ install.pkgconfig: glew.pc
+ 	$(INSTALL) -d -m 0755 "$(DESTDIR)$(PKGDIR)"
+-- 
+2.34.1
+

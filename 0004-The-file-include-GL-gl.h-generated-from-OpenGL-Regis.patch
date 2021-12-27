@@ -1,0 +1,34 @@
+From 75e3154422c4bdb686e3095322370edd5502b30d Mon Sep 17 00:00:00 2001
+From: Nicolas Caramelli <caramelli.devel@gmail.com>
+Date: Fri, 4 Dec 2020 07:42:29 +0100
+Subject: [PATCH 04/30] The file include/GL/gl.h generated from OpenGL-Registry
+ uses __gl_gl_h_
+
+---
+ auto/src/glew_head.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/auto/src/glew_head.h b/auto/src/glew_head.h
+index ad48840..cfa4007 100644
+--- a/auto/src/glew_head.h
++++ b/auto/src/glew_head.h
+@@ -2,7 +2,7 @@
+ #define __glew_h__
+ #define __GLEW_H__
+ 
+-#if defined(__gl_h_) || defined(__GL_H__) || defined(_GL_H) || defined(__X_GL_H)
++#if defined(__gl_h_) || defined(__GL_H__) || defined(_GL_H) || defined(__gl_gl_h_) || defined(__X_GL_H)
+ #error gl.h included before glew.h
+ #endif
+ #if defined(__gl2_h_)
+@@ -25,6 +25,7 @@
+ #define __gl2_h_
+ #define __GL_H__
+ #define _GL_H
++#define __gl_gl_h_
+ #define __gltypes_h_
+ #define __REGAL_H__
+ #define __X_GL_H
+-- 
+2.34.1
+

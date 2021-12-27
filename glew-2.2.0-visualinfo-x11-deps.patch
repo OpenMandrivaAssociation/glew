@@ -1,0 +1,20 @@
+diff -up glew-glew-2.2.0/Makefile.33~ glew-glew-2.2.0/Makefile
+--- glew-glew-2.2.0/Makefile.33~	2021-12-27 22:48:39.561550454 +0100
++++ glew-glew-2.2.0/Makefile	2021-12-27 22:50:45.173981597 +0100
+@@ -178,14 +178,14 @@ endif
+ 
+ bin/$(GLEWINFO.BIN): $(GLEWINFO.BIN.OBJ) $(LIB.SHARED.DIR)/$(LIB.SHARED)
+ 	@mkdir -p $(dir $@)
+-	$(CC) $(CFLAGS) -o $@ $(GLEWINFO.BIN.OBJ) $(BIN.LIBS)
++	$(CC) $(CFLAGS) -o $@ $(GLEWINFO.BIN.OBJ) $(BIN.LIBS) -lGLX -lX11
+ ifneq ($(STRIP),)
+ 	$(STRIP) -x $@
+ endif
+ 
+ bin/$(VISUALINFO.BIN): $(VISUALINFO.BIN.OBJ) $(LIB.SHARED.DIR)/$(LIB.SHARED)
+ 	@mkdir -p $(dir $@)
+-	$(CC) $(CFLAGS) -o $@ $(VISUALINFO.BIN.OBJ) $(BIN.LIBS)
++	$(CC) $(CFLAGS) -o $@ $(VISUALINFO.BIN.OBJ) $(BIN.LIBS) -lGLX -lX11
+ ifneq ($(STRIP),)
+ 	$(STRIP) -x $@
+ endif

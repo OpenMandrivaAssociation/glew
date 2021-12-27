@@ -1,0 +1,11 @@
+diff -up glew-glew-2.2.0/auto/src/glew_head.c.omv~ glew-glew-2.2.0/auto/src/glew_head.c
+--- glew-glew-2.2.0/auto/src/glew_head.c.omv~	2021-12-27 22:24:35.969892617 +0100
++++ glew-glew-2.2.0/auto/src/glew_head.c	2021-12-27 22:24:52.887945617 +0100
+@@ -8,6 +8,7 @@
+ #  define GLAPI extern
+ #  include <GL/osmesa.h>
+ #elif defined(GLEW_EGL)
++#  include <EGL/egl.h>
+ #  include <GL/eglew.h>
+ #elif defined(_WIN32)
+ /*

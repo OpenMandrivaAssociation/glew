@@ -1,0 +1,21 @@
+From 062067f2bad84610622f25d03265d22e4872d55c Mon Sep 17 00:00:00 2001
+From: Vanfanel <redwindwanderer@gmail.com>
+Date: Thu, 28 Oct 2021 23:51:03 +0200
+Subject: [PATCH 28/30] Specify that EGL/GLVND doesn't use GLU.
+
+---
+ config/Makefile.linux-egl-glvnd | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/config/Makefile.linux-egl-glvnd b/config/Makefile.linux-egl-glvnd
+index 1f6f930..dbd6328 100644
+--- a/config/Makefile.linux-egl-glvnd
++++ b/config/Makefile.linux-egl-glvnd
+@@ -2,3 +2,4 @@ include config/Makefile.linux
+ 
+ LDFLAGS.GL = -lEGL -lOpenGL
+ CFLAGS.EXTRA += -DGLEW_EGL
++GLEW_NO_GLU = -DGLEW_NO_GLU
+-- 
+2.34.1
+

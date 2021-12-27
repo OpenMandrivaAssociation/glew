@@ -1,0 +1,39 @@
+From 715afa0ff56c0eb12c23938b80aa2813daa10d81 Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@users.sourceforge.net>
+Date: Sat, 2 Feb 2019 23:54:06 +1000
+Subject: [PATCH 22/30] Extend GLEW API to support glewContextInit - GL without
+ implied GLX, WGL, EGL initialisation
+
+---
+ auto/src/glew_init_gl.c | 2 +-
+ auto/src/glew_tail.h    | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/auto/src/glew_init_gl.c b/auto/src/glew_init_gl.c
+index d3b0914..53a5885 100644
+--- a/auto/src/glew_init_gl.c
++++ b/auto/src/glew_init_gl.c
+@@ -73,7 +73,7 @@ GLboolean GLEWAPIENTRY glewGetExtension (const char* name)
+ typedef const GLubyte* (GLAPIENTRY * PFNGLGETSTRINGPROC) (GLenum name);
+ typedef void (GLAPIENTRY * PFNGLGETINTEGERVPROC) (GLenum pname, GLint *params);
+ 
+-static GLenum GLEWAPIENTRY glewContextInit ()
++GLenum GLEWAPIENTRY glewContextInit (void)
+ {
+   PFNGLGETSTRINGPROC getString;
+   const GLubyte* s;
+diff --git a/auto/src/glew_tail.h b/auto/src/glew_tail.h
+index 09daade..65c449a 100644
+--- a/auto/src/glew_tail.h
++++ b/auto/src/glew_tail.h
+@@ -27,6 +27,7 @@ VERSION_MICRO GLEW_VERSION_MICRO_STRING
+ 
+ /* API */
+ GLEWAPI GLenum GLEWAPIENTRY glewInit (void);
++GLEWAPI GLenum GLEWAPIENTRY glewContextInit (void);
+ GLEWAPI GLboolean GLEWAPIENTRY glewIsSupported (const char *name);
+ #define glewIsExtensionSupported(x) glewIsSupported(x)
+ 
+-- 
+2.34.1
+

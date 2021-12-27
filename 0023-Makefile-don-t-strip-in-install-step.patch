@@ -1,0 +1,36 @@
+From d7693eea09ac76c67f5f3aa538bb911ce2291e2c Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 29 Aug 2021 09:13:49 +1000
+Subject: [PATCH 23/30] Makefile: don't strip in install step
+
+As discussed in Issue #310 stripping the binaries is
+done by the link targets, not needed for the install step.
+Along the lines of a Yocto batch by Ross Burton <ross.burton@intel.com>
+---
+ Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 04af44c..db698e9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -61,7 +61,6 @@ DIST_DIR := $(shell mktemp -d /tmp/glew.XXXXXX)/$(DIST_NAME)
+ # To disable stripping of linked binaries either:
+ #   - use STRIP= on gmake command-line
+ #   - edit this makefile to set STRIP to the empty string
+-# (Note: STRIP does not affect the strip in the install step)
+ #
+ # To disable symlinks:
+ #   - use LN= on gmake command-line
+@@ -228,7 +227,7 @@ endif
+ 
+ install.bin: glew.bin
+ 	$(INSTALL) -d -m 0755 "$(DESTDIR)$(BINDIR)"
+-	$(INSTALL) -s -m 0755 bin/$(GLEWINFO.BIN) bin/$(VISUALINFO.BIN) "$(DESTDIR)$(BINDIR)/"
++	$(INSTALL)    -m 0755 bin/$(GLEWINFO.BIN) bin/$(VISUALINFO.BIN) "$(DESTDIR)$(BINDIR)/"
+ 
+ install.include:
+ 	$(INSTALL) -d -m 0755 "$(DESTDIR)$(INCDIR)"
+-- 
+2.34.1
+

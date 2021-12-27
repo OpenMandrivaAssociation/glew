@@ -1,2 +1,5 @@
 sources:
-  glew-2.2.0.tgz: 22d6e9b9e691080eb6313407dbf51cfebc3345ea
+  glew-2.2.0.tar.gz: 48b70d332155e97e02d5a9a6342cf96d88ca9e2e
+  OpenGL-Registry.tar.gz: d0a57f8612362e13801cf709fb2fad3cb19a5f73
+  EGL-Registry.tar.gz: 5f5af7e36f3b966525bc2a6019c32cfcc781bcdf
+  glfixes.tar.gz: a100e1542fe1d777d5d661c28c2314cc1f68bec4

@@ -1,0 +1,28 @@
+From d68cb0314990d375e75a8d5d6692a4d4f0efde7e Mon Sep 17 00:00:00 2001
+From: Nigel Stewart <nigels@nigels.com>
+Date: Sun, 10 Jan 2021 11:50:29 +1000
+Subject: [PATCH 10/30] EGLEW: Wayland wl_display and wl_resource declarations
+ for WL_bind_wayland_display
+
+---
+ auto/src/eglew_head.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/auto/src/eglew_head.h b/auto/src/eglew_head.h
+index 51b1b46..d064baf 100644
+--- a/auto/src/eglew_head.h
++++ b/auto/src/eglew_head.h
+@@ -78,6 +78,10 @@ typedef khronos_stime_nanoseconds_t EGLnsecsANDROID;
+ struct EGLClientPixmapHI;
+ struct AHardwareBuffer;
+ 
++/* Wayland types for WL_bind_wayland_display purposes */
++struct wl_display;
++struct wl_resource;
++
+ #define EGL_DONT_CARE                     ((EGLint)-1)
+ 
+ #define EGL_NO_CONTEXT                    ((EGLContext)0)
+-- 
+2.34.1
+

@@ -1,0 +1,33 @@
+From 7764128044d0b4d5f6ce2cfb875e0ae52bd89659 Mon Sep 17 00:00:00 2001
+From: Alexey Tereshenkov
+ <59651540+alexey-tereshenkov-oxb@users.noreply.github.com>
+Date: Fri, 3 Apr 2020 14:39:00 +0100
+Subject: [PATCH 01/30] Add lgtm.yml configuration file
+
+Allow LGTM.com use the custom configuration to analyze C++ code of the project
+---
+ lgtm.yml | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+ create mode 100644 lgtm.yml
+
+diff --git a/lgtm.yml b/lgtm.yml
+new file mode 100644
+index 0000000..6bd850c
+--- /dev/null
++++ b/lgtm.yml
+@@ -0,0 +1,12 @@
++extraction:
++  cpp:
++    prepare:
++      packages:
++      - "build-essential"
++      - "libxmu-dev"
++      - "libxi-dev"
++      - "libgl-dev"
++    index:
++      build_command:
++        - "cd auto; make all -j8; cd .."
++        - "make all -j8"
+-- 
+2.34.1
+
