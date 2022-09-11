@@ -1,0 +1,13 @@
+diff -up glew-glew-2.2.0/build32/Makefile.omv~ glew-glew-2.2.0/build32/Makefile
+diff -up glew-glew-2.2.0/Makefile.omv~ glew-glew-2.2.0/Makefile
+--- glew-glew-2.2.0/Makefile.omv~	2022-09-12 01:06:03.911940713 +0200
++++ glew-glew-2.2.0/Makefile	2022-09-12 01:07:27.704476508 +0200
+@@ -88,7 +88,7 @@ all debug: glew.lib glew.bin
+ # GLEW shared and static libraries
+ 
+ LIB.LDFLAGS        := $(LDFLAGS.EXTRA) $(LDFLAGS.GL)
+-LIB.LIBS           := $(GL_LDFLAGS)
++LIB.LIBS           := $(GL_LDFLAGS) -lGLX
+ LIB.SHARED.DIR     ?= lib
+ 
+ LIB.SRCS           := src/glew.c

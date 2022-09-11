@@ -14,7 +14,7 @@
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	2.2.0
-Release:	5
+Release:	6
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
@@ -63,6 +63,8 @@ Patch100:	glew-2.0.0-pkgconfig.patch
 Patch101:	glew-2.2.0-include-egl.patch
 # FIXME this should be fixed somehow to support X-less Wayland as well
 Patch102:	glew-2.2.0-visualinfo-x11-deps.patch
+# This too, EGL shouldn't really rely on GLX
+Patch103:	glew-link-libGLX.patch
 
 
 BuildRequires:	make
