@@ -14,7 +14,7 @@
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	2.2.0
-Release:	7
+Release:	8
 Group:		Development/C
 License:	BSD and MIT
 Url:		http://glew.sourceforge.net
