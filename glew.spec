@@ -17,7 +17,7 @@ Version:	2.2.0
 Release:	8
 Group:		Development/C
 License:	BSD and MIT
-Url:		http://glew.sourceforge.net
+Url:		https://glew.sourceforge.net
 # Current source is maintained at
 # https://github.com/nigels-com/glew
 Source0:	https://github.com/nigels-com/glew/archive/refs/tags/glew-%{version}.tar.gz
