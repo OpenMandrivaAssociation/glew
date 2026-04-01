@@ -39,6 +39,7 @@ Patch102:	glew-2.2.0-visualinfo-x11-deps.patch
 # This too, EGL shouldn't really rely on GLX
 Patch103:	glew-link-libGLX.patch
 
+BuildRequires:	gnu-config
 BuildRequires:	make
 BuildRequires:	pkgconfig(egl)
 BuildRequires:	pkgconfig(glu)
