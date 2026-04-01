@@ -1,9 +1,9 @@
-diff -up glew-glew-2.2.0/auto/src/glew_head.c.omv~ glew-glew-2.2.0/auto/src/glew_head.c
---- glew-glew-2.2.0/auto/src/glew_head.c.omv~	2021-12-27 22:24:35.969892617 +0100
-+++ glew-glew-2.2.0/auto/src/glew_head.c	2021-12-27 22:24:52.887945617 +0100
-@@ -8,6 +8,7 @@
- #  define GLAPI extern
- #  include <GL/osmesa.h>
+diff -up glew-glew-2.3.1/auto/src/glew_head.c.4~ glew-glew-2.3.1/auto/src/glew_head.c
+--- glew-glew-2.3.1/auto/src/glew_head.c.4~	2026-01-24 00:55:35.000000000 +0100
++++ glew-glew-2.3.1/auto/src/glew_head.c	2026-04-01 16:35:02.741973319 +0200
+@@ -16,6 +16,7 @@
+ #    undef GLEW_APIENTRY_DEFINED
+ #  endif
  #elif defined(GLEW_EGL)
 +#  include <EGL/egl.h>
  #  include <GL/eglew.h>

@@ -3,18 +3,19 @@
 %bcond_without compat32
 %endif
 
-%define major 2.2
-%define libname %mklibname %{name} %{major}
-#define libmx %mklibname %{name}mx %{major}
+%define major %(echo %{version}|cut -d. -f1-2)
+%define oldlibname %mklibname %{name} 2.2
+%define libname %mklibname %{name}
 %define devname %mklibname %{name} -d
-%define lib32name %mklib32name %{name} %{major}
+%define oldlib32name %mklib32name %{name} 2.2
+%define lib32name %mklib32name %{name}
 %define dev32name %mklib32name %{name} -d
 %define _disable_lto 1
 
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
-Version:	2.2.0
-Release:	8
+Version:	2.3.1
+Release:	1
 Group:		Development/C
 License:	BSD and MIT
 Url:		https://glew.sourceforge.net
@@ -27,36 +28,8 @@ Source2:	https://github.com/KhronosGroup/EGL-Registry/archive/refs/heads/main.ta
 Source3:	https://github.com/nigels-com/glfixes/archive/refs/heads/glew.tar.gz#/glfixes.tar.gz
 
 # Patches from upstream
-Patch00:	0001-Add-lgtm.yml-configuration-file.patch
-Patch01:	0002-Rename-lgtm.yml-to-hide-the-file.patch
-Patch02:	0003-docs-fix-simple-typo-direcly-directly.patch
-Patch03:	0004-The-file-include-GL-gl.h-generated-from-OpenGL-Regis.patch
-Patch04:	0005-fix-typo.patch
-Patch05:	0006-Use-context-manager-instead-of-raw-open.patch
-Patch06:	0007-Use-list-comprehension-instead-of-extending-the-coll.patch
-Patch07:	0008-Fixup-Install-eglew.h-too.patch
-Patch08:	0009-README.md-Updates-for-GLEW-2.2.0-release-downloads-v.patch
-Patch09:	0010-EGLEW-Wayland-wl_display-and-wl_resource-declaration.patch
-Patch10:	0011-EGLEW-Wayland-wl_buffer-declaration-for-WL_bind_wayl.patch
-Patch11:	0012-GLEW_EGL-Fix-EGL-library-check.patch
-Patch12:	0013-Documentation-refresh-for-GLEW-2.2.0-downloads-from-.patch
-Patch13:	0014-Use-os.path.join-to-create-paths.patch
-Patch14:	0015-CMake-Add-X11-EGL-options.patch
-Patch15:	0016-CMake-Add-BUILD_SHARED_LIBS-option.patch
-Patch16:	0017-CMake-Prefer-GLVND-if-available.patch
-Patch17:	0018-Add-ability-to-change-output-dirs.patch
-Patch18:	0019-Install-to-usr-local-by-default-when-using-Makefiles.patch
-Patch19:	0020-Fix-build-race-in-Makefile.patch
-Patch20:	0021-glewGetErrorString-for-GLEW_ERROR_NO_GLX_DISPLAY-add.patch
-Patch21:	0022-Extend-GLEW-API-to-support-glewContextInit-GL-withou.patch
-Patch22:	0023-Makefile-don-t-strip-in-install-step.patch
-Patch23:	0024-For-SYSTEM-linux-mingw32-and-linux-mingw64-default-G.patch
-Patch24:	0025-visualinfo-EGL-not-supported-yet-error-out-more-clea.patch
-Patch25:	0026-Disable-stripping-in-debug-mode-builds.patch
-Patch26:	0027-Add-support-for-building-against-vendor-neutral-GLVN.patch
-Patch27:	0028-Specify-that-EGL-GLVND-doesn-t-use-GLU.patch
-Patch28:	0029-Fix-various-typos.patch
-Patch29:	0030-Updated-config.guess-from-https-github.com-gcc-mirro.patch
+Patch00:	https://github.com/nigels-com/glew/commit/6e6bca0869fe80553a01aefecdc5eabe0b2c244e.patch
+Patch01:	https://github.com/nigels-com/glew/commit/79cd72e8ec9a800624265f474c787a3d897f6195.patch
 
 # OM patches
 Patch100:	glew-2.0.0-pkgconfig.patch
@@ -99,6 +72,8 @@ operating systems, including Windows, Linux, Darwin, Irix, and Solaris.
 %package -n %{libname}
 Summary:	GLEW library
 Group:		System/Libraries
+# Renamed 2026/04/01 after 6.0
+%rename %{oldlibname}
 
 %description -n %{libname}
 This package contains a shared library for %{name}.
@@ -126,6 +101,8 @@ Development files for using the %{name} library.
 %package -n %{lib32name}
 Summary:	GLEW library (32-bit)
 Group:		System/Libraries
+# Renamed 2026/04/01 after 6.0
+%rename %{oldlibname}
 
 %description -n %{lib32name}
 This package contains a shared library for %{name}.

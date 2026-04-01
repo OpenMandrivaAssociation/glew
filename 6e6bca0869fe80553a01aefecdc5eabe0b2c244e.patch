@@ -1,0 +1,35 @@
+From 6e6bca0869fe80553a01aefecdc5eabe0b2c244e Mon Sep 17 00:00:00 2001
+From: Modar Nasser <modar1999@gmail.com>
+Date: Sun, 1 Mar 2026 22:48:27 +0100
+Subject: [PATCH] cmake: Add include directories for glew and glew_s targets
+ build interface
+
+---
+ build/cmake/CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/build/cmake/CMakeLists.txt b/build/cmake/CMakeLists.txt
+index c310b5fc..7b7f8b4c 100644
+--- a/build/cmake/CMakeLists.txt
++++ b/build/cmake/CMakeLists.txt
+@@ -97,8 +97,6 @@ endif ()
+ 
+ #### GLEW ####
+ 
+-include_directories (${GLEW_DIR}/include ${X11_INCLUDE_DIR})
+-
+ set (GLEW_PUBLIC_HEADERS_FILES
+   ${GLEW_DIR}/include/GL/wglew.h
+   ${GLEW_DIR}/include/GL/glew.h
+@@ -159,7 +157,11 @@ target_link_libraries (glew_s ${GLEW_LIBRARIES})
+ 
+ target_compile_definitions(glew_s INTERFACE "GLEW_STATIC")
+ foreach(t glew glew_s)
++  target_include_directories(${t} PUBLIC $<BUILD_INTERFACE:${GLEW_DIR}/include>)
+   target_include_directories(${t} PUBLIC $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
++  if (NOT WIN32)
++    target_include_directories(${t} PUBLIC ${X11_INCLUDE_DIR})
++  endif()
+ endforeach()
+ 
+ set(targets_to_install "")
