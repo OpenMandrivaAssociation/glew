@@ -49,6 +49,7 @@ BuildRequires:	pkgconfig(xmu)
 
 %if %{with compat32}
 BuildRequires:	libc6
+BuildRequires:	atomic-devel
 BuildRequires:	devel(libGLU)
 BuildRequires:	devel(libX11)
 BuildRequires:	devel(libXi)
