@@ -15,7 +15,7 @@
 Summary:	The OpenGL Extension Wrangler Library
 Name:		glew
 Version:	2.3.1
-Release:	1
+Release:	2
 Group:		Development/C
 License:	BSD and MIT
 Url:		https://glew.sourceforge.net
@@ -166,14 +166,14 @@ cp -a $(ls -1 |grep -v build32) build32/
 %if %{with compat32}
 %make_build -C build32 GLEW_PREFIX=%{_prefix} GLEW_DEST=%{_prefix} CC="%{_bindir}/gcc -m32" LD="%{_bindir}/gcc -m32" CFLAGS.EXTRA="$(echo %{optflags} |sed -e 's,-m64,,g;s,-flto,,g') -fPIC -m32" STRIP= libdir=%{_prefix}/lib bindir=%{_bindir} includedir=%{_includedir} ARCH64=false LDFLAGS.EXTRA="" SYSTEM=linux-egl-glvnd
 %endif
-%make_build GLEW_PREFIX=%{_prefix} GLEW_DEST=%{_prefix} CFLAGS.EXTRA="%{optflags} -fPIC -flto" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir} SYSTEM=linux-clang-egl-glvnd
+%make_build GLEW_PREFIX=%{_prefix} GLEW_DEST=%{_prefix} CC="%{__cc}" LD="%{__cc}" LDFLAGS.EXTRA="" CFLAGS.EXTRA="%{optflags} -fPIC -flto" STRIP= libdir=%{_libdir} bindir=%{_bindir} includedir=%{_includedir} SYSTEM=linux-clang-egl-glvnd
 
 %install
 %if %{with compat32}
 make -C build32 install.all DESTDIR="%{buildroot}" GLEW_PREFIX=%{_prefix} GLEW_DEST=%{_prefix} CC="%{_bindir}/gcc -m32" LD="%{_bindir}/gcc -m32" LIBDIR=%{_prefix}/lib bindir=%{_bindir} includedir=%{_includedir} SYSTEM=linux-egl-glvnd
 rm -f %{buildroot}%{_prefix}/lib/*.a
 %endif
-make install.all DESTDIR="%{buildroot}" GLEW_PREFIX=%{_prefix} GLEW_DEST=%{_prefix} LIBDIR=%{_libdir} bindir=%{_bindir} includedir=%{_includedir} SYSTEM=linux-clang-egl-glvnd
+make install.all DESTDIR="%{buildroot}" GLEW_PREFIX=%{_prefix} GLEW_DEST=%{_prefix} CC="%{__cc}" LD="%{__cc}" LDFLAGS.EXTRA="" LIBDIR=%{_libdir} bindir=%{_bindir} includedir=%{_includedir} SYSTEM=linux-clang-egl-glvnd
 rm -f %{buildroot}%{_libdir}/*.a
 
 chmod 0755 %{buildroot}%{_libdir}/*.so*
